@@ -1,4 +1,4 @@
-name: .NET Core
+name: Nuget
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  publish:
 
     runs-on: ubuntu-latest
 
@@ -21,4 +21,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: Publish NuGet
-      run: dotnet nuget push **/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+      uses: rohith/publish-nuget@v2.1.2
+      with:
+        PROJECT_FILE_PATH: HandyTools/HandyTools.csproj
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
