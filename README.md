@@ -5,8 +5,8 @@ Handy tools to simplify development
 ![Nuget](https://github.com/nikodz/HandyTools/workflows/Nuget/badge.svg?branch=master)
 
 ## Links
-- Source code: https://github.com/nikodz/HandyTools
-- Nuget package: https://www.nuget.org/packages/HandyTools
+- [Source code](https://github.com/nikodz/HandyTools)
+- [Nuget package](https://www.nuget.org/packages/HandyTools)
 
 ## Extension methods
 
@@ -14,17 +14,14 @@ Handy tools to simplify development
   - HasBit
   - PutBit
   - RemoveBit
-
 - DateTimeExtensions
   - CalculateAge
-
 - IEnumerableExtensions
   - IsNotEmpty
   - IsNullOrEmpty
   - NullIfEmpty
   - IfEmpty
   - GetChildren
-
 - StringExtensions
   - ToValue
   - ToValueOrDefault
@@ -32,7 +29,6 @@ Handy tools to simplify development
   - IsEmpty
   - IsNotEmpty
   - IfEmpty
-
 - StructGenericExtensions
   - IsBetween
   - BetweenOrDefault
