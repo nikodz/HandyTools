@@ -35,4 +35,4 @@ Handy tools to simplify development
   - BetweenOr
   - IsDefault
   - IsNotDefault
-  - DefaultOr
+  - IfDefault

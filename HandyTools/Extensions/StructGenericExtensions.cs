@@ -25,9 +25,9 @@ namespace HandyTools.Extensions
 		public static bool IsNotDefault<T>(this T i) where T : struct => !i.IsDefault();
 		public static bool IsNotDefault<T>(this T? i) where T : struct => !i.IsDefault();
 
-		public static T DefaultOr<T>(this T i, T value) where T : struct => IsDefault(i) ? value : i;
-		public static T? DefaultOr<T>(this T? i, T? value) where T : struct => IsDefault(i) ? value : i;
-		public static T? DefaultOr<T>(this T i, T? value) where T : struct => IsDefault(i) ? value : i;
-		public static T DefaultOr<T>(this T? i, T value) where T : struct => IsDefault(i) ? value : i.Value;
+		public static T IfDefault<T>(this T i, T value) where T : struct => IsDefault(i) ? value : i;
+		public static T? IfDefault<T>(this T? i, T? value) where T : struct => IsDefault(i) ? value : i;
+		public static T? IfDefault<T>(this T i, T? value) where T : struct => IsDefault(i) ? value : i;
+		public static T IfDefault<T>(this T? i, T value) where T : struct => IsDefault(i) ? value : i.Value;
 	}
 }

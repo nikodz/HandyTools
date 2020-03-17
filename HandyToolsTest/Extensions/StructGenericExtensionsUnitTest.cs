@@ -174,9 +174,9 @@ namespace HandyToolsTest.Extensions
 		[InlineData(1, 2, 1)]
 		[InlineData(0, 2, 2)]
 		[InlineData(0, 0, 0)]
-		public void Test_DefaultOr_True(int a, int b, int expected)
+		public void Test_IfDefault_True(int a, int b, int expected)
 		{
-			var actual = a.DefaultOr(b);
+			var actual = a.IfDefault(b);
 
 			Assert.Equal(expected, actual);
 		}
@@ -186,9 +186,9 @@ namespace HandyToolsTest.Extensions
 		[InlineData(0, 2, 2)]
 		[InlineData(0, 0, 0)]
 		[InlineData(null, 0, 0)]
-		public void Test_DefaultOr_Nullable_A_True(int? a, int b, int expected)
+		public void Test_IfDefault_Nullable_A_True(int? a, int b, int expected)
 		{
-			var actual = a.DefaultOr(b);
+			var actual = a.IfDefault(b);
 
 			Assert.Equal(expected, actual);
 		}
@@ -198,9 +198,9 @@ namespace HandyToolsTest.Extensions
 		[InlineData(0, 2, 2)]
 		[InlineData(0, 0, 0)]
 		[InlineData(0, null, null)]
-		public void Test_DefaultOr_Nullable_B_True(int a, int? b, int? expected)
+		public void Test_IfDefault_Nullable_B_True(int a, int? b, int? expected)
 		{
-			var actual = a.DefaultOr(b);
+			var actual = a.IfDefault(b);
 
 			Assert.Equal(expected, actual);
 		}
@@ -212,9 +212,9 @@ namespace HandyToolsTest.Extensions
 		[InlineData(null, 0, 0)]
 		[InlineData(0, null, null)]
 		[InlineData(null, null, null)]
-		public void Test_DefaultOr_Nullable_AB_True(int? a, int? b, int? expected)
+		public void Test_IfDefault_Nullable_AB_True(int? a, int? b, int? expected)
 		{
-			var actual = a.DefaultOr(b);
+			var actual = a.IfDefault(b);
 
 			Assert.Equal(expected, actual);
 		}
