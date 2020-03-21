@@ -2,6 +2,7 @@
 Handy tools to simplify development
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
+![Unit Test](https://github.com/nikodz/HandyTools/workflows/Unit%20Test/badge.svg?branch=master)
 ![Nuget](https://github.com/nikodz/HandyTools/workflows/Nuget/badge.svg?branch=master)
 
 ## Links
