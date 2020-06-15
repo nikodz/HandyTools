@@ -28,5 +28,17 @@ namespace HandyToolsTest.Extensions
 				yield return new object[] { new DateTime(1992, 2, 29), new DateTime(2020, 3, 1), 28 };
 			}
 		}
+
+		[Fact]
+		public void Test_DateTime_EqualsInSeconds()
+		{
+			DateTime? a = new DateTime(2000, 1, 2, 3, 4, 5, 6);
+			DateTime? b = new DateTime(2000, 1, 2, 3, 4, 5, 7);
+			Assert.True(a.EqualsInSeconds(b));
+			Assert.True(a.Value.EqualsInSeconds(b.Value));
+			a = null;
+			Assert.False(a.EqualsInSeconds(b));
+			Assert.False(b.EqualsInSeconds(a));
+		}
 	}
 }
