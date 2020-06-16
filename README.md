@@ -17,6 +17,7 @@ Handy tools to simplify development
   - RemoveBit
 - DateTimeExtensions
   - CalculateAge
+  - EqualsInSeconds
 - IEnumerableExtensions
   - IsNotEmpty
   - IsNullOrEmpty
