@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<PackageId>HandyTools</PackageId>
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 		<Authors>Niko Dzneladze</Authors>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
 </Project>
