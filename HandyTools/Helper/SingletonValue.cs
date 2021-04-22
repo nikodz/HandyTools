@@ -13,14 +13,17 @@ namespace HandyTools.Helper
 			this._Getter = getter;
 		}
 
-		public T Get()
+		public T Value
 		{
-			if (!_HasValue)
+			get
 			{
-				_Value = this._Getter();
-				_HasValue = true;
+				if (!_HasValue)
+				{
+					_Value = this._Getter();
+					_HasValue = true;
+				}
+				return _Value;
 			}
-			return _Value;
 		}
 	}
 }

@@ -11,8 +11,8 @@ namespace HandyToolsTest.Helper
 		{
 			var counter = 0;
 			var singleValue = new SingletonValue<int>(() => { counter++; return counter - 1; });
-			var a = singleValue.Get();
-			var b = singleValue.Get();
+			var a = singleValue.Value;
+			var b = singleValue.Value;
 			Assert.Equal(1, counter);
 			Assert.Equal(0, a);
 			Assert.Equal(0, b);
@@ -23,8 +23,8 @@ namespace HandyToolsTest.Helper
 		{
 			var counter = 0;
 			var singleValue = new SingletonValue<string>(() => { counter++; return "test" + counter; });
-			var a = singleValue.Get();
-			var b = singleValue.Get();
+			var a = singleValue.Value;
+			var b = singleValue.Value;
 			Assert.Equal(1, counter);
 			Assert.Equal("test1", a);
 			Assert.Equal("test1", b);

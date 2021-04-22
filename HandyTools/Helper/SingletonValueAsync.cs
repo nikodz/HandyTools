@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace HandyTools.Helper
@@ -14,7 +15,7 @@ namespace HandyTools.Helper
 			this._Getter = getter;
 		}
 
-		public async Task<T> Get()
+		protected async Task<T> Get()
 		{
 			if (!_HasValue)
 			{
@@ -23,5 +24,7 @@ namespace HandyTools.Helper
 			}
 			return _Value;
 		}
+
+		public TaskAwaiter<T> GetAwaiter() => Get().GetAwaiter();
 	}
 }

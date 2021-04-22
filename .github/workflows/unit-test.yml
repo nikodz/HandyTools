@@ -1,4 +1,4 @@
-name: Unit-Test
+name: .NET
 
 on:
   push:
@@ -16,6 +16,10 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
-    - name: Run unit tests with dotnet
-      run: dotnet test --configuration Release
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
