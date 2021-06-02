@@ -6,7 +6,9 @@ namespace HandyTools.Extensions
 	{
 		public static bool EqualsInSeconds(this TimeSpan a, TimeSpan b)
 			=> (int)a.TotalSeconds == (int)b.TotalSeconds;
+		public static bool EqualsInSeconds(this TimeSpan a, TimeSpan? b)
+			=> a.EqualsInSeconds(b ?? TimeSpan.Zero);
 		public static bool EqualsInSeconds(this TimeSpan? a, TimeSpan? b)
-			=> (int)(a?.TotalSeconds ?? 0) == (int)(b?.TotalSeconds ?? 0);
+			=> (a ?? TimeSpan.Zero).EqualsInSeconds(b);
 	}
 }
