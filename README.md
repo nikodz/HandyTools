@@ -18,6 +18,8 @@ Handy tools to simplify development
 - DateTimeExtensions
   - CalculateAge
   - EqualsInSeconds
+- TimeSpanExtensions
+  - EqualsInSeconds
 - IEnumerableExtensions
   - IsNotEmpty
   - IsNullOrEmpty
