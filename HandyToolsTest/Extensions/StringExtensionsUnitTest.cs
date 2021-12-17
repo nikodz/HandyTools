@@ -167,6 +167,29 @@ public class StringExtensionsUnitTest
 	}
 	#endregion
 
+	#region NullIfEmpty
+	[Theory]
+	[InlineData(null)]
+	[InlineData("a")]
+	public void Test_NullIfEmpty_True(string input)
+	{
+		var actual = input.NullIfEmpty();
+		Assert.Equal(input, actual);
+	}
+
+	[Theory]
+	[InlineData("")]
+	[InlineData(" ")]
+	[InlineData("\t")]
+	[InlineData("\r")]
+	[InlineData("\n")]
+	public void Test_NullIfEmpty_False(string input)
+	{
+		var actual = input.NullIfEmpty();
+		Assert.NotEqual(input, actual);
+	}
+	#endregion
+
 	#region IsNotEmpty Then
 	[Fact]
 	public async Task Test_IsNotEmpty_Then()

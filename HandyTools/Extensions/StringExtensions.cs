@@ -45,6 +45,8 @@ public static class StringExtensions
 
 	public static bool IsEmpty(this string text) => string.IsNullOrWhiteSpace(text);
 	public static bool IsNotEmpty(this string text) => !text.IsEmpty();
+	
+	public static string NullIfEmpty(this string text) => text.IsEmpty() ? null : text;
 
 	public static T IsNotEmpty<T>(this string text, Func<T> then) => text.IsEmpty() ? default(T) : then();
 	public static async Task<T> IsNotEmpty<T>(this string text, Func<Task<T>> then) => text.IsEmpty() ? default(T) : await then();
@@ -57,7 +59,7 @@ public static class StringExtensions
 	public static string IfEmpty(this string text, SingletonValue<string> then) => text.IsEmpty() ? then.Value : text;
 	public static async Task<string> IfEmpty(this string text, SingletonValueAsync<string> then) => text.IsEmpty() ? await then : text;
 	public static async Task<string> IfEmpty(this Task<string> text, SingletonValueAsync<string> then) => (await text).IsEmpty() ? await then : await text;
-	
+
 	public static string IfEmpty(this string text, Func<string> then)
 		=> text.IsEmpty() ? new SingletonValue<string>(then).Value : text;
 	public static async Task<string> IfEmpty(this string text, Func<Task<string>> then)
