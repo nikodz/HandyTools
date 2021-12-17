@@ -167,6 +167,25 @@ public class StringExtensionsUnitTest
 	}
 	#endregion
 
+	#region IsNotEmpty Then
+	[Fact]
+	public async Task Test_IsNotEmpty_Then()
+	{
+		string stringNull = null;
+		var stringEmpty = string.Empty;
+		Assert.Equal(0, stringEmpty.IsNotEmpty(() => 1));
+		Assert.Equal(0, stringNull.IsNotEmpty(() => 2));
+		Assert.Equal(0, await stringEmpty.IsNotEmpty(() => Task.FromResult(3)));
+		Assert.Equal(0, await stringNull.IsNotEmpty(() => Task.FromResult(4)));
+		Assert.Equal(5, "5".IsNotEmpty(() => 5));
+		Assert.Equal(6, await "6".IsNotEmpty(() => Task.FromResult(6)));
+		Assert.Equal(7, "7".IsNotEmpty(input => input.ToValue<int>()));
+		Assert.Equal(8, await "8".IsNotEmpty(input => Task.FromResult(input.ToValue<int>())));
+		Assert.Equal("9", "9".IsNotEmpty(input => input));
+		Assert.Equal("10", await "10".IsNotEmpty(input => Task.FromResult(input)));
+	}
+	#endregion
+
 	#region NotContains
 	[Theory]
 	[InlineData("", "a")]
