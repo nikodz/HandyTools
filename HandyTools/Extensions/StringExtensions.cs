@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using HandyTools.Helper;
 
 namespace HandyTools.Extensions;
 
@@ -43,5 +45,15 @@ public static class StringExtensions
 
 	public static bool IsEmpty(this string text) => string.IsNullOrWhiteSpace(text);
 	public static bool IsNotEmpty(this string text) => !text.IsEmpty();
+	public static bool NotContains(this string text, string search) => !text.Contains(search);
 	public static string IfEmpty(this string text, string then) => text.IsEmpty() ? then : text;
+	public static string IfEmpty(this string text, SingletonValue<string> then) => text.IsEmpty() ? then.Value : text;
+	public static async Task<string> IfEmpty(this string text, SingletonValueAsync<string> then) => text.IsEmpty() ? await then : text;
+	public static async Task<string> IfEmpty(this Task<string> text, SingletonValueAsync<string> then) => (await text).IsEmpty() ? await then : await text;
+	public static string IfEmpty(this string text, Func<string> then)
+		=> text.IsEmpty() ? new SingletonValue<string>(then).Value : text;
+	public static async Task<string> IfEmpty(this string text, Func<Task<string>> then)
+		=> text.IsEmpty() ? await new SingletonValueAsync<string>(then) : text;
+	public static async Task<string> IfEmpty(this Task<string> text, Func<Task<string>> then)
+		=> await (await text).IfEmpty(then);
 }

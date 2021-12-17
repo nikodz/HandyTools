@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HandyTools.Extensions;
+using HandyTools.Helper;
 using Xunit;
 
 namespace HandyToolsTest.Extensions;
@@ -56,6 +58,31 @@ public class IEnumerableExtesionsUnitTest
 	{
 		var input = new List<int>();
 		var actual = input.IsNullOrEmpty();
+		Assert.True(actual);
+	}
+	#endregion
+
+	#region NotContains
+	[Fact]
+	public void Test_NotContains_Contains()
+	{
+		var input = new List<int> { 1, 2 };
+		var actual = input.NotContains(2);
+		Assert.False(actual);
+	}
+	[Fact]
+	public void Test_NotContains_NotContains()
+	{
+		var input = new List<int> { 1, 3 };
+		var actual = input.NotContains(2);
+		Assert.True(actual);
+	}
+
+	[Fact]
+	public void Test_NotContains_ForEmptyLit()
+	{
+		var input = new List<int>();
+		var actual = input.NotContains(1);
 		Assert.True(actual);
 	}
 	#endregion
@@ -120,6 +147,250 @@ public class IEnumerableExtesionsUnitTest
 		var input = new List<int>();
 		IEnumerable<int> then = null;
 		var actual = input.IfEmpty(then);
+		Assert.Null(actual);
+	}
+	#endregion
+
+	#region IfEmpty SingletonValue
+	[Fact]
+	public void Test_IfEmpty_SingletonValue_SingleElement()
+	{
+		var input = new List<int> { 1 };
+		var then = new List<int> { 2 };
+		var actual = input.IfEmpty(new SingletonValue<IEnumerable<int>>(() => then));
+		Assert.Equal(input, actual);
+	}
+
+	[Fact]
+	public void Test_IfEmpty_SingletonValue_Null()
+	{
+		IEnumerable<int> input = null;
+		var then = new List<int> { 2 };
+		var actual = input.IfEmpty(new SingletonValue<IEnumerable<int>>(() => then));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public void Test_IfEmpty_SingletonValue_Empty()
+	{
+		var input = new List<int>();
+		var then = new List<int> { 2 };
+		var actual = input.IfEmpty(new SingletonValue<IEnumerable<int>>(() => then));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public void Test_IfEmpty_SingletonValue_InputEmpty_ThenNull()
+	{
+		var input = new List<int>();
+		IEnumerable<int> then = null;
+		var actual = input.IfEmpty(new SingletonValue<IEnumerable<int>>(() => then));
+		Assert.Null(actual);
+	}
+	#endregion
+
+	#region IfEmpty SingletonValueAsync
+	[Fact]
+	public async Task Test_IfEmpty_SingletonValueAsync_SingleElement()
+	{
+		var input = new List<int> { 1 };
+		var then = new List<int> { 2 };
+		var actual = await input.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		Assert.Equal(input, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_SingletonValueAsync_Null()
+	{
+		IEnumerable<int> input = null;
+		var then = new List<int> { 2 };
+		var actual = await input.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_SingletonValueAsync_Empty()
+	{
+		var input = new List<int>();
+		var then = new List<int> { 2 };
+		var actual = await input.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_SingletonValueAsync_InputEmpty_ThenNull()
+	{
+		var input = new List<int>();
+		IEnumerable<int> then = null;
+		var actual = await input.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		Assert.Null(actual);
+	}
+	#endregion
+
+	#region IfEmpty SingletonValueAsync Chain
+	[Fact]
+	public async Task Test_IfEmpty_SingletonValueAsync_Chain_SingleElement()
+	{
+		var input = new List<int> { 1 };
+		var then = new List<int> { 2 };
+		var actual = await input
+			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)input)))
+			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		Assert.Equal(input, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_SingletonValueAsync_Chain_Null()
+	{
+		IEnumerable<int> input = null;
+		var then = new List<int> { 2 };
+		var actual = await input
+			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)input)))
+			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_SingletonValueAsync_Chain_Empty()
+	{
+		var input = new List<int>();
+		var then = new List<int> { 2 };
+		var actual = await input
+			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)input)))
+			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_SingletonValueAsync_Chain_InputEmpty_ThenNull()
+	{
+		var input = new List<int>();
+		IEnumerable<int> then = null;
+		var actual = await input
+			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)input)))
+			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		Assert.Null(actual);
+	}
+	#endregion
+
+	#region IfEmpty Expression
+	[Fact]
+	public void Test_IfEmpty_Expression_SingleElement()
+	{
+		var input = new List<int> { 1 };
+		var then = new List<int> { 2 };
+		var actual = input.IfEmpty(() => then);
+		Assert.Equal(input, actual);
+	}
+
+	[Fact]
+	public void Test_IfEmpty_Expression_Null()
+	{
+		IEnumerable<int> input = null;
+		var then = new List<int> { 2 };
+		var actual = input.IfEmpty(() => then);
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public void Test_IfEmpty_Expression_Empty()
+	{
+		var input = new List<int>();
+		var then = new List<int> { 2 };
+		var actual = input.IfEmpty(() => then);
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public void Test_IfEmpty_Expression_InputEmpty_ThenNull()
+	{
+		var input = new List<int>();
+		IEnumerable<int> then = null;
+		var actual = input.IfEmpty(() => then);
+		Assert.Null(actual);
+	}
+	#endregion
+
+	#region IfEmpty Expression Async
+	[Fact]
+	public async Task Test_IfEmpty_Expression_Async_SingleElement()
+	{
+		var input = new List<int> { 1 };
+		var then = new List<int> { 2 };
+		var actual = await input.IfEmpty(() => Task.FromResult((IEnumerable<int>)then));
+		Assert.Equal(input, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_Expression_Async_Null()
+	{
+		IEnumerable<int> input = null;
+		var then = new List<int> { 2 };
+		var actual = await input.IfEmpty(() => Task.FromResult((IEnumerable<int>)then));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_Expression_Async_Empty()
+	{
+		var input = new List<int>();
+		var then = new List<int> { 2 };
+		var actual = await input.IfEmpty(() => Task.FromResult((IEnumerable<int>)then));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_Expression_Async_InputEmpty_ThenNull()
+	{
+		var input = new List<int>();
+		IEnumerable<int> then = null;
+		var actual = await input.IfEmpty(() => Task.FromResult((IEnumerable<int>)then));
+		Assert.Null(actual);
+	}
+	#endregion
+
+	#region IfEmpty Expression Async Chain
+	[Fact]
+	public async Task Test_IfEmpty_Expression_Chain_SingleElement()
+	{
+		var input = new List<int> { 1 };
+		var then = new List<int> { 2 };
+		var actual = await input
+			.IfEmpty(() => Task.FromResult((IEnumerable<int>)input))
+			.IfEmpty(() => Task.FromResult((IEnumerable<int>)then));
+		Assert.Equal(input, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_Expression_Chain_Null()
+	{
+		IEnumerable<int> input = null;
+		var then = new List<int> { 2 };
+		var actual = await input
+			.IfEmpty(() => Task.FromResult((IEnumerable<int>)input))
+			.IfEmpty(() => Task.FromResult((IEnumerable<int>)then));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_Expression_Chain_Empty()
+	{
+		var input = new List<int>();
+		var then = new List<int> { 2 };
+		var actual = await input
+			.IfEmpty(() => Task.FromResult((IEnumerable<int>)input))
+			.IfEmpty(() => Task.FromResult((IEnumerable<int>)then));
+		Assert.Equal(then, actual);
+	}
+
+	[Fact]
+	public async Task Test_IfEmpty_Expression_Chain_InputEmpty_ThenNull()
+	{
+		var input = new List<int>();
+		IEnumerable<int> then = null;
+		var actual = await input
+			.IfEmpty(() => Task.FromResult((IEnumerable<int>)input))
+			.IfEmpty(() => Task.FromResult((IEnumerable<int>)then));
 		Assert.Null(actual);
 	}
 	#endregion

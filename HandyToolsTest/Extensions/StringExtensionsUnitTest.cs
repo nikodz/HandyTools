@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using HandyTools.Extensions;
+using HandyTools.Helper;
 using Xunit;
 
 namespace HandyToolsTest.Extensions;
@@ -165,6 +167,27 @@ public class StringExtensionsUnitTest
 	}
 	#endregion
 
+	#region NotContains
+	[Theory]
+	[InlineData("", "a")]
+	[InlineData("abcdfgh", "e")]
+	[InlineData("a", "b")]
+	public void Test_NotContains_True(string input, string search)
+	{
+		var actual = input.NotContains(search);
+		Assert.True(actual);
+	}
+
+	[Theory]
+	[InlineData("a", "a")]
+	[InlineData("abcdefgh", "e")]
+	public void Test_NotContains_False(string input, string search)
+	{
+		var actual = input.NotContains(search);
+		Assert.False(actual);
+	}
+	#endregion
+
 	#region IfEmpty
 	[Theory]
 	[InlineData("a", "b")]
@@ -184,6 +207,152 @@ public class StringExtensionsUnitTest
 	public void Test_IfEmpty_ReturnThen(string input, string then)
 	{
 		var actual = input.IfEmpty(then);
+		Assert.Equal(then, actual);
+	}
+	#endregion
+
+	#region IfEmpty SingletonValue
+	[Theory]
+	[InlineData("a", "b")]
+	public void Test_IfEmpty_SingletonValue_ReturnInput(string input, string then)
+	{
+		var actual = input.IfEmpty(new SingletonValue<string>(() => then));
+		Assert.Equal(input, actual);
+	}
+
+	[Theory]
+	[InlineData(null, "a")]
+	[InlineData("", "a")]
+	[InlineData(" ", "a")]
+	[InlineData("\t", "a")]
+	[InlineData("\r", "a")]
+	[InlineData("\n", "a")]
+	public void Test_IfEmpty_SingletonValue_ReturnThen(string input, string then)
+	{
+		var actual = input.IfEmpty(new SingletonValue<string>(() => then));
+		Assert.Equal(then, actual);
+	}
+	#endregion
+
+	#region IfEmpty SingletonValueAsync
+	[Theory]
+	[InlineData("a", "b")]
+	public async Task Test_IfEmpty_SingletonValueAsync_ReturnInput(string input, string then)
+	{
+		var actual = await input.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(then)));
+		Assert.Equal(input, actual);
+	}
+
+	[Theory]
+	[InlineData(null, "a")]
+	[InlineData("", "a")]
+	[InlineData(" ", "a")]
+	[InlineData("\t", "a")]
+	[InlineData("\r", "a")]
+	[InlineData("\n", "a")]
+	public async Task Test_IfEmpty_SingletonValueAsync_ReturnThen(string input, string then)
+	{
+		var actual = await input.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(then)));
+		Assert.Equal(then, actual);
+	}
+	#endregion
+
+	#region IfEmpty SingletonValueAsync chain
+	[Theory]
+	[InlineData("a", "b")]
+	public async Task Test_IfEmpty_SingletonValueAsync_Chain_ReturnInput(string input, string then)
+	{
+		var actual = await input
+			.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(input)))
+			.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(then)));
+		Assert.Equal(input, actual);
+	}
+
+	[Theory]
+	[InlineData(null, "a")]
+	[InlineData("", "a")]
+	[InlineData(" ", "a")]
+	[InlineData("\t", "a")]
+	[InlineData("\r", "a")]
+	[InlineData("\n", "a")]
+	public async Task Test_IfEmpty_SingletonValueAsync_Chain_ReturnThen(string input, string then)
+	{
+		var actual = await input
+			.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(input)))
+			.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(then)));
+		Assert.Equal(then, actual);
+	}
+	#endregion
+
+	#region IfEmpty Expression
+	[Theory]
+	[InlineData("a", "b")]
+	public void Test_IfEmpty_Expression_ReturnInput(string input, string then)
+	{
+		var actual = input.IfEmpty(() => then);
+		Assert.Equal(input, actual);
+	}
+
+	[Theory]
+	[InlineData(null, "a")]
+	[InlineData("", "a")]
+	[InlineData(" ", "a")]
+	[InlineData("\t", "a")]
+	[InlineData("\r", "a")]
+	[InlineData("\n", "a")]
+	public void Test_IfEmpty_Expression_ReturnThen(string input, string then)
+	{
+		var actual = input.IfEmpty(() => then);
+		Assert.Equal(then, actual);
+	}
+	#endregion
+
+	#region IfEmpty Expression Async
+	[Theory]
+	[InlineData("a", "b")]
+	public async Task Test_IfEmpty_Expression_Async_ReturnInput(string input, string then)
+	{
+		var actual = await input.IfEmpty(() => Task.FromResult(then));
+		Assert.Equal(input, actual);
+	}
+
+	[Theory]
+	[InlineData(null, "a")]
+	[InlineData("", "a")]
+	[InlineData(" ", "a")]
+	[InlineData("\t", "a")]
+	[InlineData("\r", "a")]
+	[InlineData("\n", "a")]
+	public async Task Test_IfEmpty_Expression_Async_ReturnThen(string input, string then)
+	{
+		var actual = await input.IfEmpty(() => Task.FromResult(then));
+		Assert.Equal(then, actual);
+	}
+	#endregion
+
+	#region IfEmpty Expression Async chain
+	[Theory]
+	[InlineData("a", "b")]
+	public async Task Test_IfEmpty_Expression_Async_Chain_ReturnInput(string input, string then)
+	{
+		var actual = await input
+			.IfEmpty(() => Task.FromResult(input))
+			.IfEmpty(() => Task.FromResult(then));
+		Assert.Equal(input, actual);
+	}
+
+	[Theory]
+	[InlineData(null, "a")]
+	[InlineData("", "a")]
+	[InlineData(" ", "a")]
+	[InlineData("\t", "a")]
+	[InlineData("\r", "a")]
+	[InlineData("\n", "a")]
+	public async Task Test_IfEmpty_Expression_Async_Chain_ReturnThen(string input, string then)
+	{
+		var actual = await input
+			.IfEmpty(() => Task.FromResult(input))
+			.IfEmpty(() => Task.FromResult(then));
 		Assert.Equal(then, actual);
 	}
 	#endregion

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using HandyTools.Helper;
 
 namespace HandyTools.Extensions;
 
@@ -8,8 +10,18 @@ public static class IEnumerableExtesions
 {
 	public static bool IsNotEmpty<T>(this IEnumerable<T> list) => list != null && list.Any();
 	public static bool IsNullOrEmpty<T>(this IEnumerable<T> list) => !list.IsNotEmpty();
+	public static bool NotContains<T>(this IEnumerable<T> list, T search) => !list.Contains(search);
 	public static IEnumerable<T> NullIfEmpty<T>(this IEnumerable<T> list) => list.IsNotEmpty() ? list : null;
 	public static IEnumerable<T> IfEmpty<T>(this IEnumerable<T> list, IEnumerable<T> next) => list.IsNotEmpty() ? list : next;
+	public static IEnumerable<T> IfEmpty<T>(this IEnumerable<T> list, SingletonValue<IEnumerable<T>> next) => list.IsNotEmpty() ? list : next.Value;
+	public static async Task<IEnumerable<T>> IfEmpty<T>(this IEnumerable<T> list, SingletonValueAsync<IEnumerable<T>> next) => list.IsNotEmpty() ? list : await next;
+	public static async Task<IEnumerable<T>> IfEmpty<T>(this Task<IEnumerable<T>> list, SingletonValueAsync<IEnumerable<T>> next) => (await list).IsNotEmpty() ? await list : await next;
+	public static IEnumerable<T> IfEmpty<T>(this IEnumerable<T> list, Func<IEnumerable<T>> next)
+		=> list.IfEmpty(new SingletonValue<IEnumerable<T>>(next));
+	public static async Task<IEnumerable<T>> IfEmpty<T>(this IEnumerable<T> list, Func<Task<IEnumerable<T>>> next)
+		=> await list.IfEmpty(new SingletonValueAsync<IEnumerable<T>>(next));
+	public static async Task<IEnumerable<T>> IfEmpty<T>(this Task<IEnumerable<T>> list, Func<Task<IEnumerable<T>>> next)
+		=> await (await list).IfEmpty(next);
 
 	public static IEnumerable<TObject> GetChildren<TObject, TKey>(this IEnumerable<TObject> list, TObject item, Func<TObject, TKey> getKey, Func<TObject, TKey> getParentKey)
 	{
