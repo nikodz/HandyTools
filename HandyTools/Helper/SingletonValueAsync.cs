@@ -3,19 +3,15 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace HandyTools.Helper;
-
-public class SingletonValueAsync<T>
+public class SingletonValueAsync<TValue>
 {
 	private bool _HasValue;
-	private T _Value;
-	private readonly Func<Task<T>> _Getter;
+	private TValue _Value;
+	private readonly Func<Task<TValue>> _Getter;
 
-	public SingletonValueAsync(Func<Task<T>> getter)
-	{
-		this._Getter = getter;
-	}
+	internal SingletonValueAsync(Func<Task<TValue>> getter) => this._Getter = getter;
 
-	protected async Task<T> Get()
+	protected async Task<TValue> Get()
 	{
 		if (!_HasValue)
 		{
@@ -25,5 +21,5 @@ public class SingletonValueAsync<T>
 		return _Value;
 	}
 
-	public TaskAwaiter<T> GetAwaiter() => Get().GetAwaiter();
+	public TaskAwaiter<TValue> GetAwaiter() => Get().GetAwaiter();
 }

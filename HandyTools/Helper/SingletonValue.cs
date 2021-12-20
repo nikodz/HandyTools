@@ -1,19 +1,15 @@
 using System;
 
 namespace HandyTools.Helper;
-
-public class SingletonValue<T>
+public class SingletonValue<TValue>
 {
 	private bool _HasValue;
-	private T _Value;
-	private readonly Func<T> _Getter;
+	private TValue _Value;
+	private readonly Func<TValue> _Getter;
 
-	public SingletonValue(Func<T> getter)
-	{
-		this._Getter = getter;
-	}
+	internal SingletonValue(Func<TValue> getter) => this._Getter = getter;
 
-	public T Value
+	public TValue Value
 	{
 		get
 		{

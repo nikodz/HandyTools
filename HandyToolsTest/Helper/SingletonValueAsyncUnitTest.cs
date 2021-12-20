@@ -10,7 +10,7 @@ public class SingletonValueAsyncUnitTest
 	public async Task SingletonValueAsync_CallingOnlyOnce_Integer()
 	{
 		var counter = 0;
-		var singleValue = new SingletonValueAsync<int>(async () => await Task.FromResult(++counter - 1));
+		var singleValue = Singleton.CreateAsync(async () => await Task.FromResult(++counter - 1));
 		var a = await singleValue;
 		var b = await singleValue;
 		Assert.Equal(1, counter);
@@ -22,7 +22,7 @@ public class SingletonValueAsyncUnitTest
 	public async Task SingletonValueAsync_CallingOnlyOnce_String()
 	{
 		var counter = 0;
-		var singleValue = new SingletonValueAsync<string>(async () => await Task.FromResult("test" + ++counter));
+		var singleValue = Singleton.CreateAsync(async () => await Task.FromResult("test" + ++counter));
 		var a = await singleValue;
 		var b = await singleValue;
 		Assert.Equal(1, counter);

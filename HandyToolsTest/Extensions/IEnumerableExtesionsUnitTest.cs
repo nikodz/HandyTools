@@ -157,7 +157,7 @@ public class IEnumerableExtesionsUnitTest
 	{
 		var input = new List<int> { 1 };
 		var then = new List<int> { 2 };
-		var actual = input.IfEmpty(new SingletonValue<IEnumerable<int>>(() => then));
+		var actual = input.IfEmpty(Singleton.Create<IEnumerable<int>>(() => then));
 		Assert.Equal(input, actual);
 	}
 
@@ -166,7 +166,7 @@ public class IEnumerableExtesionsUnitTest
 	{
 		IEnumerable<int> input = null;
 		var then = new List<int> { 2 };
-		var actual = input.IfEmpty(new SingletonValue<IEnumerable<int>>(() => then));
+		var actual = input.IfEmpty(Singleton.Create<IEnumerable<int>>(() => then));
 		Assert.Equal(then, actual);
 	}
 
@@ -175,7 +175,7 @@ public class IEnumerableExtesionsUnitTest
 	{
 		var input = new List<int>();
 		var then = new List<int> { 2 };
-		var actual = input.IfEmpty(new SingletonValue<IEnumerable<int>>(() => then));
+		var actual = input.IfEmpty(Singleton.Create<IEnumerable<int>>(() => then));
 		Assert.Equal(then, actual);
 	}
 
@@ -184,7 +184,7 @@ public class IEnumerableExtesionsUnitTest
 	{
 		var input = new List<int>();
 		IEnumerable<int> then = null;
-		var actual = input.IfEmpty(new SingletonValue<IEnumerable<int>>(() => then));
+		var actual = input.IfEmpty(Singleton.Create<IEnumerable<int>>(() => then));
 		Assert.Null(actual);
 	}
 	#endregion
@@ -195,7 +195,7 @@ public class IEnumerableExtesionsUnitTest
 	{
 		var input = new List<int> { 1 };
 		var then = new List<int> { 2 };
-		var actual = await input.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		var actual = await input.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)then)));
 		Assert.Equal(input, actual);
 	}
 
@@ -204,7 +204,7 @@ public class IEnumerableExtesionsUnitTest
 	{
 		IEnumerable<int> input = null;
 		var then = new List<int> { 2 };
-		var actual = await input.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		var actual = await input.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)then)));
 		Assert.Equal(then, actual);
 	}
 
@@ -213,7 +213,7 @@ public class IEnumerableExtesionsUnitTest
 	{
 		var input = new List<int>();
 		var then = new List<int> { 2 };
-		var actual = await input.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		var actual = await input.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)then)));
 		Assert.Equal(then, actual);
 	}
 
@@ -222,7 +222,7 @@ public class IEnumerableExtesionsUnitTest
 	{
 		var input = new List<int>();
 		IEnumerable<int> then = null;
-		var actual = await input.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+		var actual = await input.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)then)));
 		Assert.Null(actual);
 	}
 	#endregion
@@ -234,8 +234,8 @@ public class IEnumerableExtesionsUnitTest
 		var input = new List<int> { 1 };
 		var then = new List<int> { 2 };
 		var actual = await input
-			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)input)))
-			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)input)))
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)then)));
 		Assert.Equal(input, actual);
 	}
 
@@ -245,8 +245,8 @@ public class IEnumerableExtesionsUnitTest
 		IEnumerable<int> input = null;
 		var then = new List<int> { 2 };
 		var actual = await input
-			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)input)))
-			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)input)))
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)then)));
 		Assert.Equal(then, actual);
 	}
 
@@ -256,8 +256,8 @@ public class IEnumerableExtesionsUnitTest
 		var input = new List<int>();
 		var then = new List<int> { 2 };
 		var actual = await input
-			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)input)))
-			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)input)))
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)then)));
 		Assert.Equal(then, actual);
 	}
 
@@ -267,8 +267,8 @@ public class IEnumerableExtesionsUnitTest
 		var input = new List<int>();
 		IEnumerable<int> then = null;
 		var actual = await input
-			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)input)))
-			.IfEmpty(new SingletonValueAsync<IEnumerable<int>>(() => Task.FromResult((IEnumerable<int>)then)));
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)input)))
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult((IEnumerable<int>)then)));
 		Assert.Null(actual);
 	}
 	#endregion

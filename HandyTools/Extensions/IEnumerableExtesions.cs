@@ -17,9 +17,9 @@ public static class IEnumerableExtesions
 	public static async Task<IEnumerable<T>> IfEmpty<T>(this IEnumerable<T> list, SingletonValueAsync<IEnumerable<T>> next) => list.IsNotEmpty() ? list : await next;
 	public static async Task<IEnumerable<T>> IfEmpty<T>(this Task<IEnumerable<T>> list, SingletonValueAsync<IEnumerable<T>> next) => (await list).IsNotEmpty() ? await list : await next;
 	public static IEnumerable<T> IfEmpty<T>(this IEnumerable<T> list, Func<IEnumerable<T>> next)
-		=> list.IfEmpty(new SingletonValue<IEnumerable<T>>(next));
+		=> list.IfEmpty(Singleton.Create(next));
 	public static async Task<IEnumerable<T>> IfEmpty<T>(this IEnumerable<T> list, Func<Task<IEnumerable<T>>> next)
-		=> await list.IfEmpty(new SingletonValueAsync<IEnumerable<T>>(next));
+		=> await list.IfEmpty(Singleton.CreateAsync(next));
 	public static async Task<IEnumerable<T>> IfEmpty<T>(this Task<IEnumerable<T>> list, Func<Task<IEnumerable<T>>> next)
 		=> await (await list).IfEmpty(next);
 

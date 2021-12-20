@@ -258,7 +258,7 @@ public class StringExtensionsUnitTest
 	[InlineData("a", "b")]
 	public void Test_IfEmpty_SingletonValue_ReturnInput(string input, string then)
 	{
-		var actual = input.IfEmpty(new SingletonValue<string>(() => then));
+		var actual = input.IfEmpty(Singleton.Create(() => then));
 		Assert.Equal(input, actual);
 	}
 
@@ -271,7 +271,7 @@ public class StringExtensionsUnitTest
 	[InlineData("\n", "a")]
 	public void Test_IfEmpty_SingletonValue_ReturnThen(string input, string then)
 	{
-		var actual = input.IfEmpty(new SingletonValue<string>(() => then));
+		var actual = input.IfEmpty(Singleton.Create(() => then));
 		Assert.Equal(then, actual);
 	}
 	#endregion
@@ -281,7 +281,7 @@ public class StringExtensionsUnitTest
 	[InlineData("a", "b")]
 	public async Task Test_IfEmpty_SingletonValueAsync_ReturnInput(string input, string then)
 	{
-		var actual = await input.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(then)));
+		var actual = await input.IfEmpty(Singleton.CreateAsync(() => Task.FromResult(then)));
 		Assert.Equal(input, actual);
 	}
 
@@ -294,7 +294,7 @@ public class StringExtensionsUnitTest
 	[InlineData("\n", "a")]
 	public async Task Test_IfEmpty_SingletonValueAsync_ReturnThen(string input, string then)
 	{
-		var actual = await input.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(then)));
+		var actual = await input.IfEmpty(Singleton.CreateAsync(() => Task.FromResult(then)));
 		Assert.Equal(then, actual);
 	}
 	#endregion
@@ -305,8 +305,8 @@ public class StringExtensionsUnitTest
 	public async Task Test_IfEmpty_SingletonValueAsync_Chain_ReturnInput(string input, string then)
 	{
 		var actual = await input
-			.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(input)))
-			.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(then)));
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult(input)))
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult(then)));
 		Assert.Equal(input, actual);
 	}
 
@@ -320,8 +320,8 @@ public class StringExtensionsUnitTest
 	public async Task Test_IfEmpty_SingletonValueAsync_Chain_ReturnThen(string input, string then)
 	{
 		var actual = await input
-			.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(input)))
-			.IfEmpty(new SingletonValueAsync<string>(() => Task.FromResult(then)));
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult(input)))
+			.IfEmpty(Singleton.CreateAsync(() => Task.FromResult(then)));
 		Assert.Equal(then, actual);
 	}
 	#endregion

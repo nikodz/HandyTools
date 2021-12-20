@@ -9,7 +9,7 @@ public class SingletonValueUnitTest
 	public void SingletonValue_CallingOnlyOnce_Integer()
 	{
 		var counter = 0;
-		var singleValue = new SingletonValue<int>(() => ++counter - 1);
+		var singleValue = Singleton.Create(() => ++counter - 1);
 		var a = singleValue.Value;
 		var b = singleValue.Value;
 		Assert.Equal(1, counter);
@@ -21,7 +21,7 @@ public class SingletonValueUnitTest
 	public void SingletonValue_CallingOnlyOnce_String()
 	{
 		var counter = 0;
-		var singleValue = new SingletonValue<string>(() => "test" + ++counter);
+		var singleValue = Singleton.Create(() => "test" + ++counter);
 		var a = singleValue.Value;
 		var b = singleValue.Value;
 		Assert.Equal(1, counter);
